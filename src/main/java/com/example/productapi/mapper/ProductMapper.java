@@ -9,10 +9,6 @@ import org.mapstruct.Mapper;
 public interface ProductMapper {
     Product toProduct(ProductRequest productRequest);
 
-    Product toProductResponse(ProductResponse productResponse);
-
-    ProductRequest toProductRequest(Product product);
-
     ProductResponse toProductResponse(Product product);
 
 
