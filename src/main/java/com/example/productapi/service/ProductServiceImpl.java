@@ -34,6 +34,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductResponse> getProductByListOfIds(List<Long> ids) {
+        return productRepository.findByIdIn(ids).stream()
+                .map(productMapper::toProductResponse)
+                .toList();
+    }
+
+    @Override
     public ProductResponse getProductByCode(String code) {
         Product product = productRepository.findProductByCode(code)
                 .orElseThrow(() -> new IllegalArgumentException(Messages.PRODUCT_CODE_NOT_FOUND.getMessage()));

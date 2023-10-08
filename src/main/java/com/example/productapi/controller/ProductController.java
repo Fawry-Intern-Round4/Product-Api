@@ -29,6 +29,11 @@ public class ProductController {
     public ProductResponse getProductByCode(@RequestParam("code") String code) {
         return productService.getProductByCode(code);
     }
+    @GetMapping(params = "ids")
+    @ResponseStatus(code = HttpStatus.OK)
+    public List<ProductResponse> getAllProductsInIds(@RequestParam List<Long> ids) {
+        return productService.getProductByListOfIds(ids);
+    }
     @GetMapping
     @ResponseStatus(code = HttpStatus.OK)
     public List<ProductResponse> getAllProducts() {
@@ -38,10 +43,5 @@ public class ProductController {
     @ResponseStatus(code = HttpStatus.OK)
     public ProductResponse updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
         return productService.updateProduct(id, productRequest);
-    }
-    @DeleteMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public void deleteProduct(@PathVariable("id") Long id) {
-        productService.deleteProduct(id);
     }
 }

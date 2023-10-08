@@ -3,7 +3,6 @@ package com.example.productapi.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "products")
@@ -12,8 +11,6 @@ import org.hibernate.annotations.Where;
 @AllArgsConstructor
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE products SET deleted = true WHERE id=?")
-@Where(clause = "deleted=false")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +20,4 @@ public class Product {
     String description;
     Double price;
     String image;
-    boolean deleted = Boolean.FALSE;
 }
