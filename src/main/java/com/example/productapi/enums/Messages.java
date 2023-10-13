@@ -7,6 +7,7 @@ public enum Messages {
     PRODUCT_NOT_FOUND("Product not found"),
     PRODUCT_CODE_ALREADY_EXISTS("Product code already exists"),
     PRODUCT_CODE_NOT_FOUND("Product code not found"),
+    IDS_NOT_FOUND("Ids not found"),
     ;
     final String message;
 

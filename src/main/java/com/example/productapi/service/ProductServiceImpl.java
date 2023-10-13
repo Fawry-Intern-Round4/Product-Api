@@ -4,12 +4,15 @@ import com.example.productapi.dto.ProductRequest;
 import com.example.productapi.dto.ProductResponse;
 import com.example.productapi.entity.Product;
 import com.example.productapi.enums.Messages;
+import com.example.productapi.exception.IdsNotFoundException;
 import com.example.productapi.mapper.ProductMapper;
 import com.example.productapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -35,9 +38,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> getProductByListOfIds(List<Long> ids) {
-        return productRepository.findByIdIn(ids).stream()
-                .map(productMapper::toProductResponse)
-                .toList();
+        List<Product> products = productRepository.findByIdIn(ids);
+        if (products.size() == ids.size()) {
+            return products.stream().map(productMapper::toProductResponse).toList();
+        }
+
+        Set<Long> productIds = new HashSet<>(products.stream()
+                .map(Product::getId)
+                .toList());
+        ids.removeAll(productIds);
+        throw new IdsNotFoundException(Messages.IDS_NOT_FOUND.getMessage(), ids);
     }
 
     @Override
