@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class GeneralError {
     private String timestamp;
 
     public static GeneralError generateGeneralError(int status, String message) {
-        LocalDate localDate = LocalDate.now();
-        return new GeneralError(status, message, localDate.toString());
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss a"));
+        return new GeneralError(status, message, timestamp);
     }
 }

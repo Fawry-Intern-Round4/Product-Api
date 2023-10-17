@@ -3,6 +3,7 @@ package com.example.productapi.controller;
 import com.example.productapi.dto.ProductRequest;
 import com.example.productapi.dto.ProductResponse;
 import com.example.productapi.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ProductController {
     private final ProductService productService;
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    public ProductResponse addProduct(@RequestBody ProductRequest productRequest) {
+    public ProductResponse addProduct(@Valid @RequestBody ProductRequest productRequest) {
         return productService.addProduct(productRequest);
     }
     @GetMapping("/{id}")
@@ -42,7 +43,7 @@ public class ProductController {
     }
     @PutMapping("/{id}")
     @ResponseStatus(code = HttpStatus.OK)
-    public ProductResponse updateProduct(@PathVariable("id") Long id, @RequestBody ProductRequest productRequest) {
+    public ProductResponse updateProduct(@PathVariable("id") Long id, @Valid @RequestBody ProductRequest productRequest) {
         return productService.updateProduct(id, productRequest);
     }
 }
