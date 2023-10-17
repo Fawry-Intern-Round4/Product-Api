@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/product")
@@ -31,7 +32,7 @@ public class ProductController {
     }
     @GetMapping(params = "ids")
     @ResponseStatus(code = HttpStatus.OK)
-    public List<ProductResponse> getAllProductsInIds(@RequestParam List<Long> ids) {
+    public List<ProductResponse> getAllProductsInIds(@RequestParam Set<Long> ids) {
         return productService.getProductByListOfIds(ids);
     }
     @GetMapping

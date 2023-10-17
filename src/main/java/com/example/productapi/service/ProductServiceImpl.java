@@ -4,7 +4,7 @@ import com.example.productapi.dto.ProductRequest;
 import com.example.productapi.dto.ProductResponse;
 import com.example.productapi.entity.Product;
 import com.example.productapi.enums.Messages;
-import com.example.productapi.exception.IdsNotFoundException;
+import com.example.productapi.exception.IdsException;
 import com.example.productapi.mapper.ProductMapper;
 import com.example.productapi.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductResponse> getProductByListOfIds(List<Long> ids) {
+    public List<ProductResponse> getProductByListOfIds(Set<Long> ids) {
         List<Product> products = productRepository.findByIdIn(ids);
         if (products.size() == ids.size()) {
             return products.stream().map(productMapper::toProductResponse).toList();
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
                 .map(Product::getId)
                 .toList());
         ids.removeAll(productIds);
-        throw new IdsNotFoundException(Messages.IDS_NOT_FOUND.getMessage(), ids);
+        throw new IdsException(Messages.IDS_NOT_FOUND.getMessage(), ids);
     }
 
     @Override
@@ -78,14 +78,6 @@ public class ProductServiceImpl implements ProductService {
         Product product = productMapper.toProduct(productRequest);
         product.setId(id);
         return productMapper.toProductResponse(productRepository.save(product));
-    }
-
-    @Override
-    public void deleteProduct(Long id) {
-        if (!productRepository.existsById(id)) {
-            throw new IllegalArgumentException(Messages.PRODUCT_NOT_FOUND.getMessage());
-        }
-        productRepository.deleteById(id);
     }
 
 }
