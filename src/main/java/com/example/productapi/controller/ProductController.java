@@ -22,27 +22,22 @@ public class ProductController {
         return productService.addProduct(productRequest);
     }
     @GetMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
     public ProductResponse getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
     @GetMapping(params = "code")
-    @ResponseStatus(code = HttpStatus.OK)
     public ProductResponse getProductByCode(@RequestParam("code") String code) {
         return productService.getProductByCode(code);
     }
     @GetMapping(params = "ids")
-    @ResponseStatus(code = HttpStatus.OK)
     public List<ProductResponse> getAllProductsInIds(@RequestParam Set<Long> ids) {
         return productService.getProductByListOfIds(ids);
     }
     @GetMapping
-    @ResponseStatus(code = HttpStatus.OK)
     public List<ProductResponse> getAllProducts() {
         return productService.getAllProducts();
     }
     @PutMapping("/{id}")
-    @ResponseStatus(code = HttpStatus.OK)
     public ProductResponse updateProduct(@PathVariable("id") Long id, @Valid @RequestBody ProductRequest productRequest) {
         return productService.updateProduct(id, productRequest);
     }
